@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus
 import java.time.LocalDateTime
 
 @Document
-class Scrape(
+data class Scrape(
     @Id()
     var id:String?=null,
     var url: String,
@@ -15,9 +15,3 @@ class Scrape(
     var status:HttpStatus?=null,
     var created:LocalDateTime)
 
-fun Scrape.toCreateScrapeDTO() = xpath?.let {
-    CreateScrapeDTO(
-        url = url,
-        xpath = it
-    )
-}
