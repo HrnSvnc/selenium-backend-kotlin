@@ -16,8 +16,7 @@ class ScrapeService(val repository:ScrapeRepository) {
             created = LocalDateTime.now()))
     }
 
-
-    fun findScrapeById(id:String):Scrape?{
+    fun findScrapeById(id: String): Scrape? {
         return repository.findById(id)
     }
 }
