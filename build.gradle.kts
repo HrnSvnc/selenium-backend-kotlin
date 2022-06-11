@@ -22,6 +22,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("io.github.microutils:kotlin-logging:2.1.23")
+	implementation("org.seleniumhq.selenium:selenium-java:4.1.4")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 
 }
