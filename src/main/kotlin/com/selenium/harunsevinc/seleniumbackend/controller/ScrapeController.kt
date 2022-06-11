@@ -2,6 +2,7 @@ package com.selenium.harunsevinc.seleniumbackend.controller
 
 import com.selenium.harunsevinc.seleniumbackend.data.scrape.CreateScrapeDTO
 import com.selenium.harunsevinc.seleniumbackend.data.scrape.Scrape
+import com.selenium.harunsevinc.seleniumbackend.repository.ScrapeRepository
 import com.selenium.harunsevinc.seleniumbackend.service.ScrapeService
 import mu.KotlinLogging
 import org.springframework.http.HttpStatus
@@ -16,7 +17,7 @@ import org.springframework.web.server.ResponseStatusException
 
 @RestController
 @RequestMapping("/scrape")
-class ScrapeController (val scrapeService:ScrapeService){
+class ScrapeController (val scrapeService:ScrapeService, val repository: ScrapeRepository){
 
     private val logger = KotlinLogging.logger {}
 
@@ -31,6 +32,16 @@ class ScrapeController (val scrapeService:ScrapeService){
             logger.info { "Scrape is empty so not found" }
             throw ResponseStatusException(HttpStatus.NOT_FOUND)
         }
+    }
+
+    @PostMapping("/{id}")
+    fun startScrape(@PathVariable id:String):Any{
+        val scrape = repository.findById(id)
+        if(scrape!=null){
+            logger.info { "Starting Scrape process for id:$id" }
+            scrapeService.startScrape(scrape)
+        }
+        return HttpStatus.OK
     }
 
     @PostMapping("/")
