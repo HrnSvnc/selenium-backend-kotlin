@@ -1,5 +1,6 @@
 package com.selenium.harunsevinc.seleniumbackend.controller
 
+import com.selenium.harunsevinc.seleniumbackend.data.scrape.Browser
 import com.selenium.harunsevinc.seleniumbackend.data.scrape.CreateScrapeDTO
 import com.selenium.harunsevinc.seleniumbackend.data.scrape.Scrape
 import com.selenium.harunsevinc.seleniumbackend.repository.ScrapeRepository
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
 
@@ -35,11 +37,11 @@ class ScrapeController (val scrapeService:ScrapeService, val repository: ScrapeR
     }
 
     @PostMapping("/{id}")
-    fun startScrape(@PathVariable id:String):Any{
+    fun startScrape(@PathVariable id:String,@RequestParam browser:Browser,@RequestParam("headless",required = false) headless:Boolean):Any{
         val scrape = repository.findById(id)
         if(scrape!=null){
             logger.info { "Starting Scrape process for id:$id" }
-            scrapeService.startScrape(scrape)
+            scrapeService.startScrape(scrape,browser,headless)
         }
         return HttpStatus.OK
     }

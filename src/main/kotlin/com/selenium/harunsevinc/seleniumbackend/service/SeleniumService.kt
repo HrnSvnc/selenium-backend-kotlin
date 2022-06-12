@@ -17,44 +17,40 @@ class SeleniumService (){
 
     private val logger = KotlinLogging.logger {}
 
-    fun scrapeWithFireFox(scrape:Scrape){
+    fun scrapeWithFireFox(scrape:Scrape,headless:Boolean){
         System.setProperty("webdriver.gecko.driver","src/main/resources/webdriver/geckodriver.exe")
-        val options = FirefoxOptions()
-        options.setHeadless(true)
-        val driver = FirefoxDriver(options)
+        val driver = FirefoxDriver(FirefoxOptions().setHeadless(headless?:false))
         logger.info { "Scraping with Firefox started" }
         driver.get(scrape.url)
-        val webElement: WebElement = driver.findElement(By.xpath(scrape.xpath?.first() ?:""))
+        val webElement: WebElement = driver.findElement(By.cssSelector("#corePriceDisplay_desktop_feature_div > div:nth-child(2)"))
+        //val webElement: WebElement = driver.findElement(By.xpath(scrape.xpath?.first() ?:""))
         logger.info { "Scraping with Firefox finished" }
         logger.info { webElement.text }
         driver.quit()
     }
 
-    fun scrapeWithChrome(scrape:Scrape){
+    fun scrapeWithChrome(scrape:Scrape,headless:Boolean){
         System.setProperty("webdriver.chrome.driver","src/main/resources/webdriver/chromedriver.exe")
-        val options = ChromeOptions()
-        options.setHeadless(true)
-        val driver = ChromeDriver(options)
+        val driver = ChromeDriver(ChromeOptions().setHeadless(headless?:false))
         logger.info { "Scraping with Chrome started" }
         driver.get(scrape.url)
-        val webElement:WebElement = driver.findElement(By.xpath(scrape.xpath?.first() ?:""))
+        val webElement: WebElement = driver.findElement(By.cssSelector("#corePriceDisplay_desktop_feature_div > div:nth-child(2)"))
+        //val webElement:WebElement = driver.findElement(By.xpath(scrape.xpath?.first() ?:""))
         logger.info { "Scraping with Chrome started" }
         logger.info { webElement.text }
         driver.quit()
     }
 
-    fun scrapeWithEdge(scrape:Scrape){
+    fun scrapeWithEdge(scrape:Scrape,headless:Boolean){
         System.setProperty("webdriver.edge.driver","src/main/resources/webdriver/msedgedriver.exe")
-        val options = EdgeOptions()
-        options.setHeadless(true)
-        val driver = EdgeDriver(options)
-        logger.info { "Scraping with Edge started" }
+        val driver = EdgeDriver(EdgeOptions().setHeadless(headless?:false))
         driver.get(scrape.url)
-        val webElement:WebElement = driver.findElement(By.xpath(scrape.xpath?.first() ?:""))
+        logger.info { "Scraping with Edge started" }
+        val webElement: WebElement = driver.findElement(By.cssSelector("#corePriceDisplay_desktop_feature_div > div:nth-child(2)"))
+        //val webElement:WebElement = driver.findElement(By.xpath(scrape.xpath?.first() ?:""))
         logger.info { "Scraping with Edge started" }
         logger.info { webElement.text }
         driver.quit()
-
     }
 
 

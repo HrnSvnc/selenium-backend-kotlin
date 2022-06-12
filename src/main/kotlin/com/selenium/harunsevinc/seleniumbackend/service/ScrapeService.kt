@@ -1,5 +1,6 @@
 package com.selenium.harunsevinc.seleniumbackend.service
 
+import com.selenium.harunsevinc.seleniumbackend.data.scrape.Browser
 import com.selenium.harunsevinc.seleniumbackend.data.scrape.CreateScrapeDTO
 import com.selenium.harunsevinc.seleniumbackend.data.scrape.Scrape
 import com.selenium.harunsevinc.seleniumbackend.repository.ScrapeRepository
@@ -26,8 +27,12 @@ class ScrapeService(val repository:ScrapeRepository,
         return repository.findById(id)
     }
 
-    fun startScrape(scrape:Scrape){
+    fun startScrape(scrape:Scrape,browser:Browser,headless:Boolean){
         logger.info { "Starting scraping process..." }
-        seleniumService.scrapeWithFireFox(scrape)
+        when(browser){
+            Browser.firefox->seleniumService.scrapeWithFireFox(scrape,headless)
+            Browser.chrome->seleniumService.scrapeWithChrome(scrape,headless)
+            Browser.edge->seleniumService.scrapeWithEdge(scrape,headless)
+        }
     }
 }
