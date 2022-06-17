@@ -1,4 +1,6 @@
 package com.selenium.harunsevinc.seleniumbackend.data.scrape
 
-data class CreateScrapeDTO(val url:String,val xpath:Iterable<String>) {
+import com.selenium.harunsevinc.seleniumbackend.data.enums.FindByCriteria
+
+data class CreateScrapeDTO(val url:String,val selectorPath:String?, val findByCriteria: FindByCriteria?) {
 }

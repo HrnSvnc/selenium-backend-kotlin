@@ -1,6 +1,6 @@
 package com.selenium.harunsevinc.seleniumbackend.controller
 
-import com.selenium.harunsevinc.seleniumbackend.data.scrape.Browser
+import com.selenium.harunsevinc.seleniumbackend.data.enums.Browser
 import com.selenium.harunsevinc.seleniumbackend.data.scrape.CreateScrapeDTO
 import com.selenium.harunsevinc.seleniumbackend.data.scrape.Scrape
 import com.selenium.harunsevinc.seleniumbackend.repository.ScrapeRepository
@@ -37,7 +37,7 @@ class ScrapeController (val scrapeService:ScrapeService, val repository: ScrapeR
     }
 
     @PostMapping("/{id}")
-    fun startScrape(@PathVariable id:String,@RequestParam browser:Browser,@RequestParam("headless",required = false) headless:Boolean):Any{
+    fun startScrape(@PathVariable id:String, @RequestParam browser: Browser, @RequestParam("headless",required = false) headless:Boolean):Any{
         val scrape = repository.findById(id)
         if(scrape!=null){
             logger.info { "Starting Scrape process for id:$id" }
