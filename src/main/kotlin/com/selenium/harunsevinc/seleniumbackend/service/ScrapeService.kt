@@ -4,6 +4,7 @@ import com.selenium.harunsevinc.seleniumbackend.data.enums.Browser
 import com.selenium.harunsevinc.seleniumbackend.data.enums.ScrapeStatus
 import com.selenium.harunsevinc.seleniumbackend.data.scrape.CreateScrapeDTO
 import com.selenium.harunsevinc.seleniumbackend.data.scrape.Scrape
+import com.selenium.harunsevinc.seleniumbackend.data.scrape.StartScrapeDTO
 import com.selenium.harunsevinc.seleniumbackend.repository.ScrapeRepository
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
@@ -37,12 +38,12 @@ class ScrapeService(val repository:ScrapeRepository,
         return repository.findById(id)
     }
 
-    fun startScrape(scrape:Scrape, browser: Browser, headless:Boolean){
+    fun startScrape(scrape:Scrape, startScrapeDTO:StartScrapeDTO){
         logger.info { "Starting scraping process..." }
-        return when(browser){
-            Browser.firefox->seleniumService.scrapeWithFireFox(scrape,headless)
-            Browser.chrome->seleniumService.scrapeWithChrome(scrape,headless)
-            Browser.edge->seleniumService.scrapeWithEdge(scrape,headless)
+        return when(startScrapeDTO.browser){
+            Browser.firefox->seleniumService.scrapeWithFireFox(scrape,startScrapeDTO.headless)
+            Browser.chrome->seleniumService.scrapeWithChrome(scrape,startScrapeDTO.headless)
+            Browser.edge->seleniumService.scrapeWithEdge(scrape,startScrapeDTO.headless)
         }
     }
 }
